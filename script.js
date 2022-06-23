@@ -24,7 +24,6 @@ window.onload = ()=> {
 [boardTop, boardLeft] = [board.offsetTop, board.offsetLeft];
 
 pieces.forEach((piece,i)=>{
-    piece.height = squareSize *.80;
     dragElement(piece);
     placePieces(piece,i, boardLeft, boardTop);
     centerInSquare(piece);
@@ -40,26 +39,29 @@ window.onresize = ()=> {
 pieces.forEach((piece)=>{
     piece.style.top =  Number.parseFloat(piece.style.top) + boardTop - boardTopOld + "px";
     piece.style.left = Number.parseFloat(piece.style.left) + boardLeft - boardLeftOld + "px";
+    centerInSquare(piece);
 });
 
 };
 
 
 function dragElement(elmnt) {
-    elmnt.onmousedown = (e)=> {
+    elmnt.onmousedown = elmnt.ontouchstart = (e)=> {
         e.preventDefault();
+        if(e.type=='touchstart') e = e.changedTouches[0];
         lift(elmnt);
         [posX, posY] = [e.clientX, e.clientY];
-        document.onmousemove = (e)=> {
+        document.onmousemove = elmnt.ontouchmove = (e)=> {
             e.preventDefault();
+            if(e.type=='touchmove') e = e.changedTouches[0];
             [dy, dx] = [posY - e.clientY, posX - e.clientX];
             elmnt.style.top = Number.parseFloat(elmnt.style.top) - dy + "px";
             elmnt.style.left = Number.parseFloat(elmnt.style.left) - dx + "px";
             [posX, posY] = [e.clientX, e.clientY];
         }
-        document.onmouseup =()=> {
+        document.onmouseup = elmnt.ontouchend = ()=> {
             centerInSquare(elmnt);
-            document.onmouseup = document.onmousemove = null;
+            document.onmouseup = document.onmousemove = elmnt.ontouchmove = elmnt.ontouchend = null;
         }
     }
     

@@ -41,7 +41,7 @@ td,th{
 
 .piece{
     position: absolute;
-    top: 0;
+    height: calc(var(--size)*.80);
     cursor: grab;
     margin: calc(var(--size)/2);
     transform: translate(-50%, -50%);
