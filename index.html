@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" name="viewport">
     <title>Chess Game</title>
     <link rel="icon" href="chessicon.jpeg">
     <link rel="stylesheet" href="chess-style.css">
-    <script src="script.js" defer></script>
+    <script src="scripts/helperFunctions.js"></script>
+    <script src="scripts/initialization.js" defer></script>
+    <script src="scripts/piecesOnSquares.js" defer></script>
+    <script src="scripts/mainScript.js" defer></script>
 </head>
 <body>
     <table class="board">
-        <!-- <tr>
+        <tr>
             <th>A</th>
             <th>B</th>
             <th>C</th>
@@ -18,48 +21,46 @@
             <th>F</th>
             <th>G</th>
             <th>H</th>
-        </tr> -->
-        <!-- BOARD CREATED IN THE JS FILE -->
-
-        <tr>
-            <img src="pieces/b-rook.png" class="piece">
-            <img src="pieces/b-horse.png" class="piece">
-            <img src="pieces/b-bishop.png" class="piece">
-            <img src="pieces/b-queen.png" class="piece">
-            <img src="pieces/b-king.png" class="piece">
-            <img src="pieces/b-bishop.png" class="piece">
-            <img src="pieces/b-horse.png" class="piece">
-            <img src="pieces/b-rook.png" class="piece">
-
-            <img src="pieces/b-pawn.png" class="piece">
-            <img src="pieces/b-pawn.png" class="piece">
-            <img src="pieces/b-pawn.png" class="piece">
-            <img src="pieces/b-pawn.png" class="piece">
-            <img src="pieces/b-pawn.png" class="piece">
-            <img src="pieces/b-pawn.png" class="piece">
-            <img src="pieces/b-pawn.png" class="piece">
-            <img src="pieces/b-pawn.png" class="piece">
-
-
-            <img src="pieces/w-pawn.png" class="piece">
-            <img src="pieces/w-pawn.png" class="piece">
-            <img src="pieces/w-pawn.png" class="piece">
-            <img src="pieces/w-pawn.png" class="piece">
-            <img src="pieces/w-pawn.png" class="piece">
-            <img src="pieces/w-pawn.png" class="piece">
-            <img src="pieces/w-pawn.png" class="piece">
-            <img src="pieces/w-pawn.png" class="piece">
-            
-            <img src="pieces/w-rook.png" class="piece">
-            <img src="pieces/w-horse.png" class="piece">
-            <img src="pieces/w-bishop.png" class="piece">
-            <img src="pieces/w-queen.png" class="piece">
-            <img src="pieces/w-king.png" class="piece">
-            <img src="pieces/w-bishop.png" class="piece">
-            <img src="pieces/w-horse.png" class="piece">
-            <img src="pieces/w-rook.png" class="piece">
         </tr>
-        
+        <!-- BOARD CREATED IN THE JS FILE -->
     </table>
+
+    <img src="pieces/b-rook.png"    class="piece black" id="b-rook1">
+    <img src="pieces/b-horse.png"   class="piece black" id="b-horse1">
+    <img src="pieces/b-bishop.png"  class="piece black" id="b-bishop1">
+    <img src="pieces/b-queen.png"   class="piece black" id="b-queen">
+    <img src="pieces/b-king.png"    class="piece black" id="b-king">
+    <img src="pieces/b-bishop.png"  class="piece black" id="b-bishop2">
+    <img src="pieces/b-horse.png"   class="piece black" id="b-horse2">
+    <img src="pieces/b-rook.png"    class="piece black" id="b-rook2">
+
+    <img src="pieces/b-pawn.png" class="piece black" id="b-pawn1">
+    <img src="pieces/b-pawn.png" class="piece black" id="b-pawn2">
+    <img src="pieces/b-pawn.png" class="piece black" id="b-pawn3">
+    <img src="pieces/b-pawn.png" class="piece black" id="b-pawn4">
+    <img src="pieces/b-pawn.png" class="piece black" id="b-pawn5">
+    <img src="pieces/b-pawn.png" class="piece black" id="b-pawn6">
+    <img src="pieces/b-pawn.png" class="piece black" id="b-pawn7">
+    <img src="pieces/b-pawn.png" class="piece black" id="b-pawn8">
+
+
+    <img src="pieces/w-pawn.png" class="piece white" id="w-pawn1">
+    <img src="pieces/w-pawn.png" class="piece white" id="w-pawn2">
+    <img src="pieces/w-pawn.png" class="piece white" id="w-pawn3">
+    <img src="pieces/w-pawn.png" class="piece white" id="w-pawn4">
+    <img src="pieces/w-pawn.png" class="piece white" id="w-pawn5">
+    <img src="pieces/w-pawn.png" class="piece white" id="w-pawn6">
+    <img src="pieces/w-pawn.png" class="piece white" id="w-pawn7">
+    <img src="pieces/w-pawn.png" class="piece white" id="w-pawn8">
+    
+    <img src="pieces/w-rook.png"    class="piece white" id="w-rook1">
+    <img src="pieces/w-horse.png"   class="piece white" id="w-horse1">
+    <img src="pieces/w-bishop.png"  class="piece white" id="w-bishop1">
+    <img src="pieces/w-queen.png"   class="piece white" id="w-queen">
+    <img src="pieces/w-king.png"    class="piece white" id="w-king">
+    <img src="pieces/w-bishop.png"  class="piece white" id="w-bishop2">
+    <img src="pieces/w-horse.png"   class="piece white" id="w-horse2">
+    <img src="pieces/w-rook.png"    class="piece white" id="w-rook2">
+
 </body>
 </html>
