@@ -15,6 +15,10 @@ html, body{
     background-color: black;
 }
 
+.board, img {
+user-select: none;
+}
+
 tr{
     display: flex;
     background-color: azure;
@@ -36,7 +40,6 @@ td,th{
 .square:nth-child(2n+1){
     background-color: #740; /*#804f0e;*/
 }
-
 
 
 .piece{
