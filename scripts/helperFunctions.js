@@ -38,9 +38,9 @@ function putPieceOnSquare(piece) {
     if(!square) return false;
 
     // Define allowed moves
-    // if(piece.movesAllowed && ! piece.movesAllowed.includes(square)) {
-    //     return false;
-    // }
+    if(piece.movesAllowed && ! piece.movesAllowed.includes(square)) {
+        return false;
+    }
     if(square.piece && piece.classList[1]!=square.piece.classList[1]) { // If square is not empty and has opponent
         eatPiece(square.piece, square.piece.classList[1]);
     }
