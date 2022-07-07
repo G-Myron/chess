@@ -63,4 +63,14 @@ td,th{
     top: calc(var(--size) + 1rem);
 }
 
+.marked {
+    /* --mark: calc(var(--size)/10);
+    width: calc(100% - 2*var(--mark));
+    height: calc(100% - 2*var(--mark));
+    border: var(--mark) solid yellow; */
+    width: 100%;
+    height: 100%;
+    background-color: #ff0;
+    opacity: .4;
+}
 

@@ -8,6 +8,7 @@ window.onload = ()=> {
     initializePieces();
 };
 
+
 window.onresize = ()=> {
     [boardTopOld, boardLeftOld] = [boardTop, boardLeft];
     [boardTop, boardLeft] = [board.offsetTop, board.offsetLeft];
