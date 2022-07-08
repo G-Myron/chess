@@ -20,6 +20,7 @@ const squares = document.querySelectorAll(".square");
 
 function initializePieces() {
     pieces.forEach((piece,i)=>{
+        piece.color = piece.classList[1];
         makeDragable(piece);
         placePieces(piece,i, boardLeft, boardTop);
         piece.square = ()=> findPieceSquare(piece);

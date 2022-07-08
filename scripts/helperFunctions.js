@@ -15,9 +15,9 @@ function findPieceSquare(piece) { // Find which square contains this piece
     return findSquare(pieceLeft, pieceTop); // The square that has that piece
 }
 
-function eatPiece(piece, pieceColor) {
-    let n = document.querySelectorAll(`.${pieceColor}.eaten`).length; // How many of this color are eaten
-    let side = pieceColor=="black"? board.getBoundingClientRect().width : -squareSize; // Pick side to send the piece
+function eatPiece(piece) {
+    let n = document.querySelectorAll(`.${piece.color}.eaten`).length; // How many of this color are eaten
+    let side = piece.color=="black"? board.getBoundingClientRect().width : -squareSize; // Pick side to send the piece
     
     // Eat the piece and send it out of the board
     piece.style.left = boardLeft +side +'px';
@@ -33,16 +33,17 @@ function centerInSquare(square, piece) {
     return true;
 }
 
+
 function putPieceOnSquare(piece) {
     square = findPieceSquare(piece); // Find in which square is the piece
     if(!square) return false;
 
     // Define allowed moves
-    // if(piece.movesAllowed && ! piece.movesAllowed.includes(square)) {
-    //     return false;
-    // }
-    if(square.piece && piece.classList[1]!=square.piece.classList[1]) { // If square is not empty and has opponent
-        eatPiece(square.piece, square.piece.classList[1]);
+    if(piece.movesAllowed && ! piece.movesAllowed.includes(square)) {
+        return false;
+    }
+    if(square.piece && square.piece.color!=piece.color) { // If square is not empty and has opponent
+        eatPiece(square.piece, square.piece.color);
     }
     if(!square.piece) { // If square is empty
         return centerInSquare(square, piece);

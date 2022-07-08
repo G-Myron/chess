@@ -1,50 +1,26 @@
 
-function findMoves(){
-    document.querySelectorAll(".rook").forEach( rook => {
-        rook.findMoves = function() {
-            square = rook.square();
+function findMoves(){   // Called in initialization
+    findMovesPiece = (piece, findMovesFunction) => {
+        piece.findMoves = function() {
+            square = piece.square();
             if (!square) return null;
-            return findMovesRook(square);
+            
+            let moves = findMovesFunction(square, piece);
+            return moves.map( m=> { // map int list to objects list
+                    let moveSq = board.querySelector("#sq"+m);
+                    if(moveSq && (!moveSq.piece || moveSq.piece.color!=piece.color)) return moveSq;
+                });
         }
-    } )
-    document.querySelectorAll(".horse").forEach( horse => {
-        horse.findMoves = function() {
-            square = horse.square();
-            if (!square) return null;
-            return findMovesHorse(square);
-        }
-    } )
-    document.querySelectorAll(".bishop").forEach( bishop => {
-        bishop.findMoves = function() {
-            square = bishop.square();
-            if (!square) return null;
-            return findMovesBishop(square);
-        }
-    } )
-    document.querySelectorAll(".pawn").forEach( pawn => {
-        pawn.findMoves = function() {
-            square = pawn.square();
-            if (!square) return null;
-            return findMovesPawn(square, pawn.classList[1]);
-        }
-    } )
-    document.querySelectorAll(".king").forEach( king => {
-        king.findMoves = function() {
-            square = king.square();
-            if (!square) return null;
-            return findMovesKing(square);
-        }
-    } )
-    document.querySelectorAll(".queen").forEach( queen => {
-        queen.findMoves = function() {
-            square = queen.square();
-            if (!square) return null;
-            return findMovesQueen(square);
-        }
-    } )
+    }
+    document.querySelectorAll(".rook").forEach( piece => findMovesPiece(piece, findMovesRook));
+    document.querySelectorAll(".horse").forEach( piece => findMovesPiece(piece, findMovesHorse));
+    document.querySelectorAll(".bishop").forEach( piece => findMovesPiece(piece, findMovesBishop));
+    document.querySelectorAll(".pawn").forEach( piece => findMovesPiece(piece, findMovesPawn));
+    document.querySelectorAll(".queen").forEach( piece => findMovesPiece(piece, findMovesQueen));
+    document.querySelectorAll(".king").forEach( piece => findMovesPiece(piece, findMovesKing));
 }
 
-function findMovesRook(square) {    // ROOK MOVES
+function findMovesRook(square, piece) {    // ROOK MOVES
     let sqNum = Number(square.id.replace("sq", "")); // Get square's number
     let row = Number.parseInt(sqNum/8), column = sqNum%8;
     let moves = [];
@@ -53,33 +29,30 @@ function findMovesRook(square) {    // ROOK MOVES
         if(Number.parseInt(i/8) == row)
             moves.push(i);
     }
-    for(let i=column; i<64; i+=8) { // Find column
+    for(let i=sqNum; i<64; i+=8) { // Find column
+            moves.push(i);
+    }
+    for(let i=sqNum; i>=column; i-=8) { // Find column
             moves.push(i);
     }
 
-    moves = moves.map(m=> { // map int list to objects list
-        return board.querySelector("#sq"+m);
-    });
     return moves;
 }
 
-function findMovesHorse(square) {   // HORSE MOVES
+function findMovesHorse(square, piece) {   // HORSE MOVES
     let sqNum = Number(square.id.replace("sq", "")); // Get square's number
     let row = Number.parseInt(sqNum/8), column = sqNum%8;
-    let moves = [];
+    let moves = [sqNum];
 
     if(column<7) moves.push(sqNum-15, sqNum+17);
     if(column<6) moves.push(sqNum-6, sqNum+10);
     if(column>1) moves.push(sqNum+6, sqNum-10);
     if(column>0) moves.push(sqNum+15, sqNum-17);
 
-    moves = moves.map(m=> { // map int list to objects list
-        return board.querySelector("#sq"+m);
-    });
     return moves;
 }
 
-function findMovesBishop(square) {   // BISHOP MOVES
+function findMovesBishop(square, piece) {   // BISHOP MOVES
     let sqNum = Number(square.id.replace("sq", "")); // Get square's number
     let row = Number.parseInt(sqNum/8), column = sqNum%8;
     let moves = [sqNum];
@@ -95,49 +68,32 @@ function findMovesBishop(square) {   // BISHOP MOVES
         }
     }
 
-    moves = moves.map(m=> { // map int list to objects list
-        return board.querySelector("#sq"+m);
-    });
     return moves;
 }
 
-function findMovesPawn(square, color) {   // PAWN MOVES
+function findMovesPawn(square, piece) {   // PAWN MOVES
     let sqNum = Number(square.id.replace("sq", "")); // Get square's number
     let row = Number.parseInt(sqNum/8), column = sqNum%8;
     let moves = [sqNum];
+
+    let front = piece.color==="black"? +8:-8;
     
-    if(color==="black") {
-        moves.push(sqNum+8);
-        if(row==1) moves.push(sqNum+16);
-    }
-    if(color==="white") {
-        moves.push(sqNum-8);
-        if(row==6) moves.push(sqNum-16);
+    if(front>0 && row==7 || front<0 && row==0) return moves;
+    if(!board.querySelector("#sq"+(sqNum+ front)).piece) {
+            moves.push(sqNum + front);
+        if((front>0 && row==1 || front<0 && row==6) && !board.querySelector("#sq"+(sqNum+ 2*front)).piece)
+            moves.push(sqNum + 2*front);
     }
 
-    moves = moves.map(m=> { // map int list to objects list
-        let move = board.querySelector("#sq"+m);
-        if(move) return move;
-    });
+    if(column>0 && board.querySelector("#sq"+(sqNum+front-1)).piece)
+        moves.push(sqNum + front-1);
+    if(column<7 && board.querySelector("#sq"+(sqNum+front+1)).piece)
+        moves.push(sqNum + front+1);
+
     return moves;
 }
 
-function findMovesKing(square) {   // KING MOVES
-    let sqNum = Number(square.id.replace("sq", "")); // Get square's number
-    let row = Number.parseInt(sqNum/8), column = sqNum%8;
-    let moves = [sqNum, sqNum-8, sqNum+8];
-    
-    if(column>0) moves.push(sqNum-1, sqNum-9, sqNum+7);
-    if(column<7) moves.push(sqNum+1, sqNum+9, sqNum-7);
-
-    moves = moves.map(m=> { // map int list to objects list
-        let move = board.querySelector("#sq"+m);
-        if(move) return move;
-    });
-    return moves;
-}
-
-function findMovesQueen(square) {   // QUEEN MOVES
+function findMovesQueen(square, piece) {   // QUEEN MOVES
     let sqNum = Number(square.id.replace("sq", "")); // Get square's number
     let row = Number.parseInt(sqNum/8), column = sqNum%8;
     let moves = [];
@@ -161,10 +117,17 @@ function findMovesQueen(square) {   // QUEEN MOVES
         }
     }
 
-    moves = moves.map(m=> { // map int list to objects list
-        let move = board.querySelector("#sq"+m);
-        if(move) return move;
-    });
+    return moves;
+}
+
+function findMovesKing(square, piece) {   // KING MOVES
+    let sqNum = Number(square.id.replace("sq", "")); // Get square's number
+    let row = Number.parseInt(sqNum/8), column = sqNum%8;
+    let moves = [sqNum, sqNum-8, sqNum+8];
+    
+    if(column>0) moves.push(sqNum-1, sqNum-9, sqNum+7);
+    if(column<7) moves.push(sqNum+1, sqNum+9, sqNum-7);
+
     return moves;
 }
 
