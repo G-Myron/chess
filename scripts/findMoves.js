@@ -8,7 +8,8 @@ function findMoves(){   // Called in initialization
             let moves = findMovesFunction(square, piece);
             return moves.map( m=> { // map int list to objects list
                     let moveSq = board.querySelector("#sq"+m);
-                    if(moveSq && (!moveSq.piece || moveSq.piece.color!=piece.color)) return moveSq;
+                    if(moveSq && (!moveSq.piece || moveSq.piece.color!=piece.color)) // empty or opponent square
+                        return moveSq;
                 });
         }
     }
@@ -25,15 +26,23 @@ function findMovesRook(square, piece) {    // ROOK MOVES
     let row = Number.parseInt(sqNum/8), column = sqNum%8;
     let moves = [];
 
-    for(let i=sqNum-7; i<sqNum+8; i++) {    // Find row
-        if(Number.parseInt(i/8) == row)
-            moves.push(i);
+    for(let i=sqNum; i>sqNum-8; i--) {    // Find row
+        if(i<0 || i>=64) break;
+        if(Number.parseInt(i/8) == row) moves.push(i);
+        if(board.querySelector("#sq"+i).piece) break;
+    }
+    for(let i=sqNum; i<sqNum+8; i++) {    // Find row
+        if(i<0 || i>=64) break;
+        if(Number.parseInt(i/8) == row) moves.push(i);
+        if(board.querySelector("#sq"+i).piece) break;
     }
     for(let i=sqNum; i<64; i+=8) { // Find column
-            moves.push(i);
+        moves.push(i);
+        if(board.querySelector("#sq"+i).piece) break;
     }
     for(let i=sqNum; i>=column; i-=8) { // Find column
-            moves.push(i);
+        moves.push(i);
+        if(board.querySelector("#sq"+i).piece) break;
     }
 
     return moves;
@@ -57,14 +66,43 @@ function findMovesBishop(square, piece) {   // BISHOP MOVES
     let row = Number.parseInt(sqNum/8), column = sqNum%8;
     let moves = [sqNum];
 
-    for(let i=1; i<8; i++) {
-        if( (sqNum-i)%8 < sqNum%8 && (sqNum-i)%8>=0) {
-            moves.push(sqNum - 9*i);
-            moves.push(sqNum + 7*i);
+    // for(let i=1; i<8; i++) {
+    //     if( (sqNum-i)%8 < column && (sqNum-i)%8>=0) {
+    //         moves.push(sqNum - 9*i);
+    //         moves.push(sqNum + 7*i);
+    //     }
+    //     if( (sqNum+i)%8 > column ) {
+    //         moves.push(sqNum - 7*i);
+    //         moves.push(sqNum + 9*i);
+    //     }
+    // }
+    
+    for(let i=1; i<8; i++) {    // top left diagonal
+        let newSqNum = sqNum - 9*i;
+        if( newSqNum>=0 && (sqNum-i)%8 < column && (sqNum-i)%8>=0) {
+            moves.push(newSqNum);
+            if(board.querySelector("#sq" + newSqNum).piece) break;
         }
-        if( (sqNum+i)%8 > sqNum%8 ) {
-            moves.push(sqNum - 7*i);
-            moves.push(sqNum + 9*i);
+    }
+    for(let i=1; i<8; i++) {    // bottom left diagonal
+        let newSqNum = sqNum + 7*i;
+        if( newSqNum<64 && (sqNum-i)%8 < column && (sqNum-i)%8>=0) {
+            moves.push(newSqNum);
+            if(board.querySelector("#sq" + newSqNum).piece) break;
+        }
+    }
+    for(let i=1; i<8; i++) {    // top right diagonal
+        let newSqNum = sqNum - 7*i;
+        if( newSqNum>=0 && (sqNum+i)%8 > column) {
+            moves.push(newSqNum);
+            if(board.querySelector("#sq" + newSqNum).piece) break;
+        }
+    }
+    for(let i=1; i<8; i++) {    // bottom right diagonal
+        let newSqNum = sqNum + 9*i;
+        if( newSqNum<64 && (sqNum+i)%8 > column) {
+            moves.push(newSqNum);
+            if(board.querySelector("#sq" + newSqNum).piece) break;
         }
     }
 
@@ -94,29 +132,7 @@ function findMovesPawn(square, piece) {   // PAWN MOVES
 }
 
 function findMovesQueen(square, piece) {   // QUEEN MOVES
-    let sqNum = Number(square.id.replace("sq", "")); // Get square's number
-    let row = Number.parseInt(sqNum/8), column = sqNum%8;
-    let moves = [];
-    
-    for(let i=sqNum-7; i<sqNum+8; i++) {    // Find row
-        if(Number.parseInt(i/8) == row)
-            moves.push(i);
-    }
-    for(let i=column; i<64; i+=8) { // Find column
-            moves.push(i);
-    }
-
-    for(let i=1; i<8; i++) {        // Find diagonals
-        if( (sqNum-i)%8 < sqNum%8 && (sqNum-i)%8>=0) {
-            moves.push(sqNum - 9*i);
-            moves.push(sqNum + 7*i);
-        }
-        if( (sqNum+i)%8 > sqNum%8 ) {
-            moves.push(sqNum - 7*i);
-            moves.push(sqNum + 9*i);
-        }
-    }
-
+    let moves = findMovesRook(square,piece).concat(findMovesBishop(square,piece));
     return moves;
 }
 
