@@ -30,9 +30,14 @@ function eatPiece(piece) {
 }
 
 function centerInSquare(square, piece) {
+    let sqNum = Number(square.id.replace("sq", ""));
+    let row = Number.parseInt(sqNum/8);
+
     piece.style.left = square.getBoundingClientRect().left +'px';
     piece.style.top = square.getBoundingClientRect().top +'px';
     square.piece = piece;
+    if(piece.classList.contains("pawn") && (row<1 || row>6))
+        pawnPromotion();    // If a pawn reaches the end it promotes
     return true;
 }
 
@@ -42,13 +47,13 @@ function putPieceOnSquare(piece) {
     if(!square) return false;
 
     // Define allowed moves
-    if(piece.movesAllowed && ! piece.movesAllowed.includes(square)) {
+    if(piece.movesAllowed && ! piece.movesAllowed.includes(square)) { // This move is not allowed
         return false;
     }
-    if(square.piece && square.piece.color!=piece.color) { // If square is not empty and has opponent
+    if(square.piece && square.piece.color!=piece.color) { // Square is occupied by opponent
         eatPiece(square.piece, square.piece.color);
     }
-    if(!square.piece) { // If square is empty
+    if(!square.piece) { // Square is empty
         return centerInSquare(square, piece);
     }
     return false;

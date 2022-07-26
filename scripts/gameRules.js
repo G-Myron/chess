@@ -5,3 +5,8 @@ function endGame(color) {
     // Add a div in front so game cannot continue
 }
 
+function pawnPromotion() {
+    alert("PROMOTION");
+}
+
+
