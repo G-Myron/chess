@@ -18,12 +18,15 @@ function findPieceSquare(piece) { // Find which square contains this piece
 function eatPiece(piece) {
     let n = document.querySelectorAll(`.${piece.color}.eaten`).length; // How many of this color are eaten
     let side = piece.color=="black"? board.getBoundingClientRect().width : -squareSize; // Pick side to send the piece
-    
+
     // Eat the piece and send it out of the board
     piece.style.left = boardLeft +side +'px';
     piece.style.top = boardTop + n*squareSize +'px';
     piece.classList.add("eaten");
     square.piece = null;
+    
+    // Check if game ends
+    if(piece.classList.contains("king")) endGame(piece.classList[1]);
 }
 
 function centerInSquare(square, piece) {
