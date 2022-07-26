@@ -1,6 +1,7 @@
 const squareSize = Number.parseFloat(getComputedStyle(squares[0]).height);
 var boardTop = board.offsetTop;
 var boardLeft = board.offsetLeft;
+var playersTurn = "white";
 
 //------------------------- MAIN --------------------------------
 window.onload = ()=> {

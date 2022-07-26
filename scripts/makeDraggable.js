@@ -1,17 +1,22 @@
-
 function makeDragable(piece) {
+    var startPos =[];
+    var square =null;
+
     piece.onmousedown = piece.ontouchstart = (event)=> {
+        if(playersTurn != piece.color) return;
+        
         onClick(event);
-
         document.onmousemove = piece.ontouchmove = onMove;
-
         document.onmouseup = piece.ontouchend = onMouseUp;
+
     }
+
 
     function onClick(e) {
         e.preventDefault();
         if(e.type==='touchstart') e = e.changedTouches[0];  // Touch screen
         lift(piece, e);
+        square = piece.square();
         startPos = [piece.style.left, piece.style.top];
         [posX, posY] = [e.clientX, e.clientY];
         piece.movesAllowed = piece.findMoves();
@@ -32,6 +37,10 @@ function makeDragable(piece) {
         if(!putPieceOnSquare(piece)) {
             [piece.style.left, piece.style.top] = startPos;
             putPieceOnSquare(piece);
+        }
+        if(piece.square() != square) { // If pice has changed square
+            if(playersTurn == "white") playersTurn="black";
+            else playersTurn="white";   // Change the player that plays next
         }
         hideAllMoves();
     }
