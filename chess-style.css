@@ -92,6 +92,13 @@ td,th{
     height: calc(3*var(--size));
     width: calc(2*var(--size));
     background-color: azure;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: .3s;
+}
+.promotion button:hover {
+    transform: scale(1.1);
 }
 
 
