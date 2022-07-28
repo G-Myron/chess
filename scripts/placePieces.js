@@ -37,7 +37,7 @@ function centerInSquare(square, piece) {
     piece.style.top = square.getBoundingClientRect().top +'px';
     square.piece = piece;
     if(piece.classList.contains("pawn") && (row<1 || row>6))
-        pawnPromotion();    // If a pawn reaches the end it promotes
+        pawnPromotion(piece);    // If a pawn reaches the end it promotes
     return true;
 }
 
