@@ -125,10 +125,11 @@ function findMovesPawn(square, piece) {   // PAWN MOVES
         let enPNum = pawnDoubleMove.square().num;
         if(enPNum == square.num+1) {
             moves.push(square.num+front+1);
-            piece.enPassant = enPNum;
+            enPassant = piece;
         }
         if(enPNum == square.num-1) {
             moves.push(square.num+front-1);
+            enPassant = piece;
         }
     }
 

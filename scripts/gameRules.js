@@ -1,4 +1,4 @@
-var promotionPawn, promotionBoard, pawnDoubleMove=null;
+var promotionPawn, promotionBoard, pawnDoubleMove=null, enPassant=null;
 
 /* GAME TERMINATION */
 

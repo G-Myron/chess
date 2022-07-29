@@ -53,11 +53,12 @@ function putPieceOnSquare(piece, oldSquare=null) {
     if( !piece.moved && piece.classList.contains("king") && oldSquare) { // Roke-Castling
         castling(piece, sqDiff);
     }
-    if(piece.enPassant) { // En-Passant
+    if(enPassant==piece && pawnDoubleMove) { // En-Passant
         let enPSquare = pawnDoubleMove.square();
-        eatPiece(enPSquare.piece, enPSquare.piece.color);
+        let enPDiff = Math.abs(enPSquare.num-square.num);
+        if(enPDiff==8) eatPiece(enPSquare.piece, enPSquare.piece.color);
     }
-    if(sqDiff!=0) pawnDoubleMove = null;
+    if(sqDiff!=0) pawnDoubleMove=enPassant = null;    // Initialize en-passant global variables
     if(!piece.moved && piece.classList.contains("pawn") && oldSquare) { // En Passant - Check if pawn made double start
         if(Math.abs(sqDiff)==16) pawnDoubleMove=piece;
     }
