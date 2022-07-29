@@ -22,25 +22,23 @@ function findMoves(){   // Called in initialization
 }
 
 function findMovesRook(square, piece) {    // ROOK MOVES
-    let sqNum = Number(square.id.replace("sq", "")); // Get square's number
-    let row = Number.parseInt(sqNum/8), column = sqNum%8;
     let moves = [];
 
-    for(let i=sqNum; i>sqNum-8; i--) {    // Find row
+    for(let i=square.num; i>square.num-8; i--) {    // Find row
         if(i<0 || i>=64) break;
-        if(Number.parseInt(i/8) == row) moves.push(i);
+        if(Number.parseInt(i/8) == square.row) moves.push(i);
         if(!isEmptySq(i)) break;
     }
-    for(let i=sqNum; i<sqNum+8; i++) {    // Find row
+    for(let i=square.num; i<square.num+8; i++) {    // Find row
         if(i<0 || i>=64) break;
-        if(Number.parseInt(i/8) == row) moves.push(i);
+        if(Number.parseInt(i/8) == square.row) moves.push(i);
         if(!isEmptySq(i)) break;
     }
-    for(let i=sqNum; i<64; i+=8) { // Find column
+    for(let i=square.num; i<64; i+=8) { // Find column
         moves.push(i);
         if(!isEmptySq(i)) break;
     }
-    for(let i=sqNum; i>=column; i-=8) { // Find column
+    for(let i=square.num; i>=square.column; i-=8) { // Find column
         moves.push(i);
         if(!isEmptySq(i)) break;
     }
@@ -49,58 +47,54 @@ function findMovesRook(square, piece) {    // ROOK MOVES
 }
 
 function findMovesHorse(square, piece) {   // HORSE MOVES
-    let sqNum = Number(square.id.replace("sq", "")); // Get square's number
-    let row = Number.parseInt(sqNum/8), column = sqNum%8;
-    let moves = [sqNum];
+    let moves = [square.num];
 
-    if(column<7) moves.push(sqNum-15, sqNum+17);
-    if(column<6) moves.push(sqNum-6, sqNum+10);
-    if(column>1) moves.push(sqNum+6, sqNum-10);
-    if(column>0) moves.push(sqNum+15, sqNum-17);
+    if(square.column<7) moves.push(square.num-15, square.num+17);
+    if(square.column<6) moves.push(square.num-6, square.num+10);
+    if(square.column>1) moves.push(square.num+6, square.num-10);
+    if(square.column>0) moves.push(square.num+15, square.num-17);
 
     return moves;
 }
 
 function findMovesBishop(square, piece) {   // BISHOP MOVES
-    let sqNum = Number(square.id.replace("sq", "")); // Get square's number
-    let row = Number.parseInt(sqNum/8), column = sqNum%8;
-    let moves = [sqNum];
+    let moves = [square.num];
 
     // for(let i=1; i<8; i++) {
-    //     if( (sqNum-i)%8 < column && (sqNum-i)%8>=0) {
+    //     if( (sqNum-i)%8 < square.column && (sqNum-i)%8>=0) {
     //         moves.push(sqNum - 9*i);
     //         moves.push(sqNum + 7*i);
     //     }
-    //     if( (sqNum+i)%8 > column ) {
+    //     if( (sqNum+i)%8 > square.column ) {
     //         moves.push(sqNum - 7*i);
     //         moves.push(sqNum + 9*i);
     //     }
     // }
     
     for(let i=1; i<8; i++) {    // top left diagonal
-        let newSqNum = sqNum - 9*i;
-        if( newSqNum>=0 && (sqNum-i)%8 < column && (sqNum-i)%8>=0) {
+        let newSqNum = square.num - 9*i;
+        if( newSqNum>=0 && (square.num-i)%8 < square.column && (square.num-i)%8>=0) {
             moves.push(newSqNum);
             if(!isEmptySq(newSqNum)) break;
         }
     }
     for(let i=1; i<8; i++) {    // bottom left diagonal
-        let newSqNum = sqNum + 7*i;
-        if( newSqNum<64 && (sqNum-i)%8 < column && (sqNum-i)%8>=0) {
+        let newSqNum = square.num + 7*i;
+        if( newSqNum<64 && (square.num-i)%8 < square.column && (square.num-i)%8>=0) {
             moves.push(newSqNum);
             if(!isEmptySq(newSqNum)) break;
         }
     }
     for(let i=1; i<8; i++) {    // top right diagonal
-        let newSqNum = sqNum - 7*i;
-        if( newSqNum>=0 && (sqNum+i)%8 > column) {
+        let newSqNum = square.num - 7*i;
+        if( newSqNum>=0 && (square.num+i)%8 > square.column) {
             moves.push(newSqNum);
             if(!isEmptySq(newSqNum)) break;
         }
     }
     for(let i=1; i<8; i++) {    // bottom right diagonal
-        let newSqNum = sqNum + 9*i;
-        if( newSqNum<64 && (sqNum+i)%8 > column) {
+        let newSqNum = square.num + 9*i;
+        if( newSqNum<64 && (square.num+i)%8 > square.column) {
             moves.push(newSqNum);
             if(!isEmptySq(newSqNum)) break;
         }
@@ -110,23 +104,33 @@ function findMovesBishop(square, piece) {   // BISHOP MOVES
 }
 
 function findMovesPawn(square, piece) {   // PAWN MOVES
-    let sqNum = Number(square.id.replace("sq", "")); // Get square's number
-    let row = Number.parseInt(sqNum/8), column = sqNum%8;
-    let moves = [sqNum];
+    let moves = [square.num];
 
     let front = piece.color==="black"? +8:-8;
     
-    if(front>0 && row==7 || front<0 && row==0) return moves;
-    if(isEmptySq(sqNum+ front)) {
-            moves.push(sqNum + front);
-        if((front>0 && row==1 || front<0 && row==6) && isEmptySq(sqNum+ 2*front))
-            moves.push(sqNum + 2*front);
+    if(front>0 && square.row==7 || front<0 && square.row==0) return moves;
+    if(isEmptySq(square.num+ front)) {
+            moves.push(square.num + front);
+        if((front>0 && square.row==1 || front<0 && square.row==6) && isEmptySq(square.num+ 2*front))
+            moves.push(square.num + 2*front);
     }
 
-    if(column>0 && !isEmptySq(sqNum+front-1))
-        moves.push(sqNum + front-1);
-    if(column<7 && !isEmptySq(sqNum+front+1))
-        moves.push(sqNum + front+1);
+    if(square.column>0 && !isEmptySq(square.num+front-1))
+        moves.push(square.num + front-1);
+    if(square.column<7 && !isEmptySq(square.num+front+1))
+        moves.push(square.num + front+1);
+    
+    // EN PASSANT
+    if(pawnDoubleMove) {
+        let enPNum = pawnDoubleMove.square().num;
+        if(enPNum == square.num+1) {
+            moves.push(square.num+front+1);
+            piece.enPassant = enPNum;
+        }
+        if(enPNum == square.num-1) {
+            moves.push(square.num+front-1);
+        }
+    }
 
     return moves;
 }
@@ -137,19 +141,17 @@ function findMovesQueen(square, piece) {   // QUEEN MOVES
 }
 
 function findMovesKing(square, piece) {   // KING MOVES
-    let sqNum = Number(square.id.replace("sq", "")); // Get square's number
-    let row = Number.parseInt(sqNum/8), column = sqNum%8;
-    let moves = [sqNum, sqNum-8, sqNum+8];
+    let moves = [square.num, square.num-8, square.num+8];
     let rooks = document.querySelectorAll(".rook."+piece.color);
     
-    if(column>0) moves.push(sqNum-1, sqNum-9, sqNum+7);
-    if(column<7) moves.push(sqNum+1, sqNum+9, sqNum-7);
+    if(square.column>0) moves.push(square.num-1, square.num-9, square.num+7);
+    if(square.column<7) moves.push(square.num+1, square.num+9, square.num-7);
 
     // ROKE / CASTLING
-    if(!piece.moved && !rooks[0].moved && isEmptySq(sqNum-1)&&isEmptySq(sqNum-2)&&isEmptySq(sqNum-3))
-        moves.push(sqNum-2);
-    if(!piece.moved && !rooks[1].moved && isEmptySq(sqNum+1)&&isEmptySq(sqNum+2))
-        moves.push(sqNum+2);
+    if(!piece.moved && !rooks[0].moved && isEmptySq(square.num-1)&&isEmptySq(square.num-2)&&isEmptySq(square.num-3))
+        moves.push(square.num-2);
+    if(!piece.moved && !rooks[1].moved && isEmptySq(square.num+1)&&isEmptySq(square.num+2))
+        moves.push(square.num+2);
 
     return moves;
 }

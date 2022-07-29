@@ -1,4 +1,4 @@
-const squareSize = Number.parseFloat(getComputedStyle(squares[0]).height);
+const squareSize = Number.parseFloat(getComputedStyle(Squares[0]).height);
 var boardTop = board.offsetTop;
 var boardLeft = board.offsetLeft;
 var playersTurn = "white";

@@ -1,6 +1,6 @@
 
 function findSquare(x,y) { // Find which square contains these coordinates
-    for(let square of squares) {
+    for(let square of Squares) {
         let squarePos = square.getBoundingClientRect();
         if (x > squarePos.left && x < squarePos.right && y > squarePos.top && y < squarePos.bottom) {
             return square;
@@ -31,29 +31,35 @@ function eatPiece(piece) {
 }
 
 function centerInSquare(square, piece) {
-    let sqNum = Number(square.id.replace("sq", ""));
-    let row = Number.parseInt(sqNum/8);
-
     piece.style.left = square.getBoundingClientRect().left +'px';
     piece.style.top = square.getBoundingClientRect().top +'px';
     square.piece = piece;
-    if(piece.classList.contains("pawn") && (row<1 || row>6))
+    if(piece.classList.contains("pawn") && (square.row<1 || square.row>6))
         pawnPromotion(piece);    // If a pawn reaches the end it promotes
     return true;
 }
 
 
 function putPieceOnSquare(piece, oldSquare=null) {
-    square = piece.square(); // Find in which square is the piece
+    square = piece.square();
     if(!square) return false;
+
+    let sqDiff = oldSquare? square.num-oldSquare.num : NaN;
 
     // Define allowed moves
     if(piece.movesAllowed && ! piece.movesAllowed.includes(square)) { // This move is not allowed
         return false;
     }
     if( !piece.moved && piece.classList.contains("king") && oldSquare) { // Roke-Castling
-        let sqDiff = square.id.replace('sq','') - oldSquare.id.replace('sq','');
         castling(piece, sqDiff);
+    }
+    if(piece.enPassant) { // En-Passant
+        let enPSquare = pawnDoubleMove.square();
+        eatPiece(enPSquare.piece, enPSquare.piece.color);
+    }
+    if(sqDiff!=0) pawnDoubleMove = null;
+    if(!piece.moved && piece.classList.contains("pawn") && oldSquare) { // En Passant - Check if pawn made double start
+        if(Math.abs(sqDiff)==16) pawnDoubleMove=piece;
     }
     if(square.piece && square.piece.color!=piece.color) { // Square is occupied by opponent
         eatPiece(square.piece, square.piece.color);
