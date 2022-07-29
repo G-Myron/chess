@@ -34,9 +34,9 @@ function makeDragable(piece) {
 
     function onMouseUp() {
         document.onmouseup = document.onmousemove = piece.ontouchmove = piece.ontouchend = null;
-        if(!putPieceOnSquare(piece)) {
+        if(!putPieceOnSquare(piece, square)) { // If piece was not placed, return in previous position
             [piece.style.left, piece.style.top] = startPos;
-            putPieceOnSquare(piece);
+            putPieceOnSquare(piece, square);
         }
         if(piece.square() != square) { // If pice has changed square
             piece.moved = true;
@@ -50,8 +50,8 @@ function makeDragable(piece) {
         old = document.querySelector(".lifted");
         if(old) old.classList.toggle("lifted");
         elmt.classList.toggle("lifted");
-        let square = findSquare(event.clientX, event.clientY);
-        if(square) square.piece = null;
+        let currentSquare = findSquare(event.clientX, event.clientY);
+        if(currentSquare) currentSquare.piece = null;
     }
 }
 

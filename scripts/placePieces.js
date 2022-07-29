@@ -43,13 +43,17 @@ function centerInSquare(square, piece) {
 }
 
 
-function putPieceOnSquare(piece) {
-    square = findPieceSquare(piece); // Find in which square is the piece
+function putPieceOnSquare(piece, oldSquare=null) {
+    square = piece.square(); // Find in which square is the piece
     if(!square) return false;
 
     // Define allowed moves
     if(piece.movesAllowed && ! piece.movesAllowed.includes(square)) { // This move is not allowed
         return false;
+    }
+    if( !piece.moved && piece.classList.contains("king") && oldSquare) { // Roke-Castling
+        let sqDiff = square.id.replace('sq','') - oldSquare.id.replace('sq','');
+        castling(piece, sqDiff);
     }
     if(square.piece && square.piece.color!=piece.color) { // Square is occupied by opponent
         eatPiece(square.piece, square.piece.color);

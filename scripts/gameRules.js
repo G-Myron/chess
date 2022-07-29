@@ -29,3 +29,14 @@ function pawnPromote(pieceName="queen", promFunction=findMovesQueen) {  // Choos
 }
 
 
+/* CASTLING - ROKE */
+
+function castling(king, sqDiff) {
+    if(sqDiff==2 || sqDiff==-2) {
+        let rooks = document.querySelectorAll(".rook."+ king.color);
+        let rookSq = document.querySelector("#sq"+(square.id.replace('sq','') - sqDiff/2)) // id+-1
+        centerInSquare(rookSq, rooks[(sqDiff+2)/4]); // rooks[0/1]
+    }
+}
+
+
