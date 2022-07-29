@@ -39,6 +39,7 @@ function makeDragable(piece) {
             putPieceOnSquare(piece);
         }
         if(piece.square() != square) { // If pice has changed square
+            piece.moved = true;
             if(playersTurn == "white") playersTurn="black";
             else playersTurn="white";   // Change the player that plays next
         }

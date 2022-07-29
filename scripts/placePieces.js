@@ -26,7 +26,8 @@ function eatPiece(piece) {
     square.piece = null;
     
     // Check if game ends
-    if(piece.classList.contains("king")) endGame(piece.classList[1]);
+    if(piece.classList.contains("king"))
+        endGame(piece.color);    // If king is eaten
 }
 
 function centerInSquare(square, piece) {

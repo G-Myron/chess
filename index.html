@@ -68,17 +68,28 @@
     <img src="pieces/w-horse.png"   class="piece white horse" id="w-horse2">
     <img src="pieces/w-rook.png"    class="piece white rook" id="w-rook2">
 
-    <div class="promotion" id="white-promotion">
-        <button onclick="pawnPromoteQueen(this.parentElement)"><img src="pieces/w-queen.png"></button>
-        <button onclick="pawnPromoteRook(this.parentElement)"><img src="pieces/w-rook.png"></button>
-        <button onclick="pawnPromoteBishop(this.parentElement)"><img src="pieces/w-bishop.png"></button>
-        <button onclick="pawnPromoteHorse(this.parentElement)"><img src="pieces/w-horse.png"></button>
+    <div class="interruption" id="white-promotion">
+        <button onclick="pawnPromote('queen', findMovesQueen)">
+            <img src="pieces/w-queen.png"></button>
+        <button onclick="pawnPromote('rook', findMovesRook)">
+            <img src="pieces/w-rook.png"></button>
+        <button onclick="pawnPromote('bishop', findMovesBishop)">
+            <img src="pieces/w-bishop.png"></button>
+        <button onclick="pawnPromote('horse', findMovesHorse)">
+            <img src="pieces/w-horse.png"></button>
     </div>
-    <div class="promotion" id="black-promotion">
-        <button onclick="pawnPromoteQueen(this.parentElement)"><img src="pieces/b-queen.png"></button>
-        <button onclick="pawnPromoteRook(this.parentElement)"><img src="pieces/b-rook.png"></button>
-        <button onclick="pawnPromoteBishop(this.parentElement)"><img src="pieces/b-bishop.png"></button>
-        <button onclick="pawnPromoteHorse(this.parentElement)"><img src="pieces/b-horse.png"></button>
+    <div class="interruption" id="black-promotion">
+        <button onclick="pawnPromote('queen', findMovesQueen)">
+            <img src="pieces/b-queen.png"></button>
+        <button onclick="pawnPromote('rook', findMovesRook)">
+            <img src="pieces/b-rook.png"></button>
+        <button onclick="pawnPromote('bishop', findMovesBishop)">
+            <img src="pieces/b-bishop.png"></button>
+        <button onclick="pawnPromote('horse', findMovesHorse)">
+            <img src="pieces/b-horse.png"></button>
+    </div>
+    <div class="interruption" id="winnerCard">
+        <div class="winner-msg"> CONGRATS TO THE WINNER </div>
     </div>
 
 </body>

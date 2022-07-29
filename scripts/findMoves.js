@@ -144,6 +144,9 @@ function findMovesKing(square, piece) {   // KING MOVES
     if(column>0) moves.push(sqNum-1, sqNum-9, sqNum+7);
     if(column<7) moves.push(sqNum+1, sqNum+9, sqNum-7);
 
+    // ROKE / CASTLING https://en.wikipedia.org/wiki/Castling
+    if(!piece.moved) moves.push(sqNum+2, sqNum-2);
+
     return moves;
 }
 
