@@ -33,9 +33,10 @@ function pawnPromote(pieceName="queen", promFunction=findMovesQueen) {  // Choos
 
 function castling(king, sqDiff) {
     if(sqDiff==2 || sqDiff==-2) {
-        let rooks = document.querySelectorAll(".rook."+ king.color);
+        let rook = document.querySelectorAll(".rook."+ king.color)[(sqDiff+2)/4]; // rooks[0/1]
         let rookSq = document.querySelector("#sq"+(square.num - sqDiff/2)) // id+-1
-        centerInSquare(rookSq, rooks[(sqDiff+2)/4]); // rooks[0/1]
+        rook.square().piece = null;
+        centerInSquare(rookSq, rook);
     }
 }
 
