@@ -1,5 +1,7 @@
-const board = document.querySelector('.board');
-const pieces = document.querySelectorAll('.piece');
+const BOARD = document.querySelector('.board');
+const PIECES = document.querySelectorAll('.piece');
+const WHITES = document.querySelectorAll('.piece.white');
+const BLACKS = document.querySelectorAll('.piece.black');
 
 // Create Board
 for(i=0; i<8; i++){
@@ -11,7 +13,7 @@ for(i=0; i<8; i++){
         square.id = "sq" + (i*8 + k);
         row.appendChild(square);
     }
-    board.appendChild(row);
+    BOARD.appendChild(row);
 }
 
 const Squares = document.querySelectorAll(".square");
@@ -19,7 +21,7 @@ const Squares = document.querySelectorAll(".square");
 //------------------ Functions -----------------------
 
 function initializePieces() {
-    pieces.forEach((piece,i)=> {
+    PIECES.forEach((piece,i)=> {
         piece.color = piece.classList[1];
         piece.square = ()=> findPieceSquare(piece);
         piece.moved = false;
@@ -32,7 +34,7 @@ function initializePieces() {
         square.row =  Number.parseInt(square.num/8);
         square.column = square.num%8;
     })
-    findMoves();
+    findAllPiecesMoves();
 }
 
 function placePieces(piece,i, boardLeft, boardTop) {

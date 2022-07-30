@@ -1,5 +1,5 @@
 
-function findMoves(){   // Called in initialization
+function findAllPiecesMoves(){   // Called in initialization
     findMovesPiece = (piece, findMovesFunction) => {
         piece.findMoves = function() {
             square = piece.square();
@@ -7,7 +7,7 @@ function findMoves(){   // Called in initialization
             
             let moves = findMovesFunction(square, piece);
             return moves.map( m=> { // map int list to objects list
-                    let moveSq = board.querySelector("#sq"+m);
+                    let moveSq = BOARD.querySelector("#sq"+m);
                     if(moveSq && (!moveSq.piece || moveSq.piece.color!=piece.color)) // empty or opponent square
                         return moveSq;
                 });
@@ -161,7 +161,7 @@ function findMovesKing(square, piece) {   // KING MOVES
 
 
 function isEmptySq(numOfSquare) {
-    return board.querySelector("#sq"+ numOfSquare).piece? false: true;
+    return BOARD.querySelector("#sq"+ numOfSquare).piece? false: true;
 }
 
 function showMoves(moves) {

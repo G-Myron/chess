@@ -17,7 +17,7 @@ function findPieceSquare(piece) { // Find which square contains this piece
 
 function eatPiece(piece) {
     let n = document.querySelectorAll(`.${piece.color}.eaten`).length; // How many of this color are eaten
-    let side = piece.color=="black"? board.getBoundingClientRect().width : -squareSize; // Pick side to send the piece
+    let side = piece.color=="black"? BOARD.getBoundingClientRect().width : -squareSize; // Pick side to send the piece
 
     // Eat the piece and send it out of the board
     piece.style.left = boardLeft +side +'px';
