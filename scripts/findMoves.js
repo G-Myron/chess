@@ -3,7 +3,7 @@ function findAllPiecesMoves(){   // Called in initialization
     findMovesPiece = (piece, findMovesFunction) => {
         piece.findMoves = function() {
             square = piece.square();
-            if (!square) return null;
+            if (!square) return [];
             
             let moves = findMovesFunction(square, piece);
             return moves.map( m=> { // map int list to objects list
@@ -22,23 +22,23 @@ function findAllPiecesMoves(){   // Called in initialization
 }
 
 function findMovesRook(square, piece) {    // ROOK MOVES
-    let moves = [];
+    let moves = [square.num];
 
-    for(let i=square.num; i>square.num-8; i--) {    // Find row
+    for(let i=square.num-1; i>square.num-8; i--) {    // Find row
         if(i<0 || i>=64) break;
         if(Number.parseInt(i/8) == square.row) moves.push(i);
         if(!isEmptySq(i)) break;
     }
-    for(let i=square.num; i<square.num+8; i++) {    // Find row
+    for(let i=square.num+1; i<square.num+8; i++) {    // Find row
         if(i<0 || i>=64) break;
         if(Number.parseInt(i/8) == square.row) moves.push(i);
         if(!isEmptySq(i)) break;
     }
-    for(let i=square.num; i<64; i+=8) { // Find column
+    for(let i=square.num+8; i<64; i+=8) { // Find column
         moves.push(i);
         if(!isEmptySq(i)) break;
     }
-    for(let i=square.num; i>=square.column; i-=8) { // Find column
+    for(let i=square.num-8; i>=square.column; i-=8) { // Find column
         moves.push(i);
         if(!isEmptySq(i)) break;
     }

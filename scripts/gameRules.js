@@ -10,6 +10,15 @@ function endGame(color) {
     winnerBox.classList.toggle("visible-flex");
 }
 
+/* CHECK */
+
+function checkKings() {
+    let wKCheck = document.querySelector("#w-king").isThreatened();
+    let bKCheck = document.querySelector("#b-king").isThreatened();
+    if(wKCheck.length) alert(wKCheck);
+    if(bKCheck.length) alert(bKCheck);
+}
+
 
 /* PAWN PROMOTION */
 

@@ -16,7 +16,7 @@ for(i=0; i<8; i++){
     BOARD.appendChild(row);
 }
 
-const Squares = document.querySelectorAll(".square");
+const SQUARES = document.querySelectorAll(".square");
 
 //------------------ Functions -----------------------
 
@@ -29,7 +29,7 @@ function initializePieces() {
         makeDragable(piece);
         placePieces(piece,i, boardLeft, boardTop);
     });
-    Squares.forEach( (square)=> {
+    SQUARES.forEach( (square)=> {
         square.num = Number(square.id.replace("sq", "")); // Get square's number
         square.row =  Number.parseInt(square.num/8);
         square.column = square.num%8;

@@ -1,6 +1,6 @@
 
 function findSquare(x,y) { // Find which square contains these coordinates
-    for(let square of Squares) {
+    for(let square of SQUARES) {
         let squarePos = square.getBoundingClientRect();
         if (x > squarePos.left && x < squarePos.right && y > squarePos.top && y < squarePos.bottom) {
             return square;

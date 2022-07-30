@@ -1,14 +1,11 @@
 function makeDragable(piece) {
     var startPos =[];
     var square =null;
-
     piece.onmousedown = piece.ontouchstart = (event)=> {
         if(playersTurn != piece.color) return;
-        
         onClick(event);
         document.onmousemove = piece.ontouchmove = onMove;
         document.onmouseup = piece.ontouchend = onMouseUp;
-
     }
 
 
@@ -44,6 +41,7 @@ function makeDragable(piece) {
             else playersTurn="white";   // Change the player that plays next
         }
         hideAllMoves();
+        checkKings();
     }
     
     function lift(elmt, event) {
