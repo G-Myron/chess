@@ -64,17 +64,6 @@ td,th{
     top: calc(var(--size) + 1rem);
 }
 
-.marked {
-    /* --mark: calc(var(--size)/10);
-    width: calc(100% - 2*var(--mark));
-    height: calc(100% - 2*var(--mark));
-    border: var(--mark) solid yellow; */
-    width: 100%;
-    height: 100%;
-    background-color: #ff0;
-    opacity: .4;
-}
-
 .interruption {
     position: absolute;
     top: 0;
@@ -114,6 +103,20 @@ td,th{
     cursor: default;
 }
 
+/* COLORED SQUARES */
+
+.availiable {
+    width: 100%;
+    height: 100%;
+    background-color: #ff0;
+    opacity: .5;
+}
+.threatened {
+    width: 100%;
+    height: 100%;
+    background-color: #f00;
+    opacity: .5;
+}
 
 /* GENERAL */
 .visible-flex {

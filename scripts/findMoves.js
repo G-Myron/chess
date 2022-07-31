@@ -151,12 +151,12 @@ function findMovesKing(square, piece) {   // KING MOVES
     // ROKE / CASTLING
     let i=-1;   // Iterator for castling
     if(!piece.moved && !rooks[0].moved && isEmptySq(square.num-1)&&isEmptySq(square.num-2)&&isEmptySq(square.num-3)) {
-        for(i=0; i<5; i++)  // Check if there are threatened squares between
+        for(i=0; i<3; i++)  // Check if there are threatened squares between
             if( !SQUARES[square.num-i].isnotThreatened(piece.color)) break;
-        if(i==5) moves.push(square.num-2);
+        if(i==4) moves.push(square.num-2);
     }
     if(!piece.moved && !rooks[1].moved && isEmptySq(square.num+1)&&isEmptySq(square.num+2)) {
-        for(i=0; i<4; i++)  // Check if there are threatened squares between
+        for(i=0; i<3; i++)  // Check if there are threatened squares between
             if( !SQUARES[square.num+i].isnotThreatened(piece.color)) break;
         if(i==4) moves.push(square.num+2);
     }
@@ -175,12 +175,12 @@ function showMoves(moves) {
     moves.forEach(sq=> {
         if(sq==null || sq.childElementCount) return;
         let childSq = document.createElement('div');
-        childSq.classList.add('marked');
+        childSq.classList.add('availiable');
         sq.appendChild(childSq);
     });
 }
 
 function hideAllMoves() {
-    document.querySelectorAll(".marked").forEach(c=> c.remove())
+    document.querySelectorAll(".availiable").forEach(c=> c.remove())
 }
 

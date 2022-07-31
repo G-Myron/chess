@@ -13,10 +13,21 @@ function endGame(color) {
 /* CHECK */
 
 function checkKings() {
-    let wKCheck = document.querySelector("#w-king").isnotThreatened();
-    let bKCheck = document.querySelector("#b-king").isnotThreatened();
-    if(!wKCheck) console.log("White Check");
-    if(!bKCheck) console.log("Black Check");
+    let king = playersTurn=='white'? document.querySelector("#w-king"): document.querySelector("#b-king");
+    let threatened = document.querySelectorAll(".threatened")
+    if(!king.isnotThreatened()) {
+        createThreatened(king);
+        king.isThreatened().forEach( piece=> createThreatened(piece));
+    }
+    else if(threatened) threatened.forEach( p=> p.remove());
+
+    function createThreatened(piece) {
+        let sq = piece.square(), childSq = document.createElement('div');
+        if(sq.querySelector('.threatened')!=null) return; // Already marked
+
+        childSq.classList.add('threatened');
+        sq.appendChild(childSq);
+    }
 }
 
 
