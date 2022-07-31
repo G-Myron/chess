@@ -13,10 +13,10 @@ function endGame(color) {
 /* CHECK */
 
 function checkKings() {
-    let wKCheck = document.querySelector("#w-king").isThreatened();
-    let bKCheck = document.querySelector("#b-king").isThreatened();
-    if(wKCheck.length) alert(wKCheck);
-    if(bKCheck.length) alert(bKCheck);
+    let wKCheck = document.querySelector("#w-king").isnotThreatened();
+    let bKCheck = document.querySelector("#b-king").isnotThreatened();
+    if(!wKCheck) console.log("White Check");
+    if(!bKCheck) console.log("Black Check");
 }
 
 

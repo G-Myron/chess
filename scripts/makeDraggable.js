@@ -44,6 +44,7 @@ function makeDragable(piece) {
         checkKings();
     }
     
+    
     function lift(elmt, event) {
         old = document.querySelector(".lifted");
         if(old) old.classList.toggle("lifted");
