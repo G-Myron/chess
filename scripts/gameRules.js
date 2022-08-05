@@ -21,7 +21,7 @@ function checkKings() {
     }
     else if(threatened) threatened.forEach( p=> p.remove());
 
-    function createThreatened(piece) {
+    function createThreatened(piece) {  // Creates fake piece to see if it would be threatened in that position
         let sq = piece.square(), childSq = document.createElement('div');
         if(sq.querySelector('.threatened')!=null) return; // Already marked
 

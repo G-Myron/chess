@@ -151,14 +151,14 @@ function findMovesKing(square, piece) {   // KING MOVES
     // ROKE / CASTLING
     let i=-1;   // Iterator for castling
     if(!piece.moved && !rooks[0].moved && isEmptySq(square.num-1)&&isEmptySq(square.num-2)&&isEmptySq(square.num-3)) {
-        for(i=0; i<3; i++)  // Check if there are threatened squares between
+        for(i=0; i<3; i++)  // Check if there are threatened squares for big roke
             if( !SQUARES[square.num-i].isnotThreatened(piece.color)) break;
-        if(i==4) moves.push(square.num-2);
+        if(i==3) moves.push(square.num-2);
     }
     if(!piece.moved && !rooks[1].moved && isEmptySq(square.num+1)&&isEmptySq(square.num+2)) {
-        for(i=0; i<3; i++)  // Check if there are threatened squares between
+        for(i=0; i<3; i++)  // Check if there are threatened squares for small roke
             if( !SQUARES[square.num+i].isnotThreatened(piece.color)) break;
-        if(i==4) moves.push(square.num+2);
+        if(i==3) moves.push(square.num+2);
     }
 
     return moves;

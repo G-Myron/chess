@@ -16,7 +16,11 @@ for(i=0; i<8; i++){
     BOARD.appendChild(row);
 }
 
-const SQUARES = document.querySelectorAll(".square");
+const SQUARES = []; // Create list of squares sorted by id number
+document.querySelectorAll(".square").forEach( sq=> {
+    id = Number(sq.id.replace('sq',''));
+    SQUARES[id] = sq;
+});
 
 //------------------ Functions -----------------------
 
